@@ -37,6 +37,10 @@ All cleaning is written in M in one staging query (`Stg_Country`), then referenc
 - 3 documentation tables built in DAX: `Insights Table`, `Recommendations Table`, `Cleaning Result`.
 - 35 DAX measures, including medians next to averages, `RANKX` rankings, trade balance and conditional-format colour measures.
 
+![Data model](images/08-data-model.png)
+
+![Report tables](images/09-report-tables.png)
+
 ## Report pages
 
 Home · Executive Overview · Economic Performance · Health & Education · Country Tooltip · Country Profile · Insights · Recommendations · Methodology
