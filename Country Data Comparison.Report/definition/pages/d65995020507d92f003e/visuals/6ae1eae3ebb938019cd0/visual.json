@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "6ae1eae3ebb938019cd0",
+  "position": {
+    "x": 337.34693877551024,
+    "y": 0.34358047016270632,
+    "z": 4000,
+    "height": 81.428571428571431,
+    "width": 235.53409090909093,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Population"
+                    }
+                  },
+                  "Property": "Average Birth Rate"
+                }
+              },
+              "queryRef": "Population.Average Birth Rate",
+              "nativeQueryRef": "Average Birth Rate"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Population"
+                  }
+                },
+                "Property": "Average Birth Rate"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "188659c86d8166815a13"
+}

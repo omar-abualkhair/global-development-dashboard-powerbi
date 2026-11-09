@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "9b1f7407ac96ea668521",
+  "position": {
+    "x": 337.34693877551018,
+    "y": 0.35714285714281657,
+    "z": 4000,
+    "height": 84.642857142857139,
+    "width": 235.53409090909093,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Economy"
+                    }
+                  },
+                  "Property": "High Growth Countries"
+                }
+              },
+              "queryRef": "Economy.High Growth Countries",
+              "nativeQueryRef": "High Growth Countries"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Economy"
+                  }
+                },
+                "Property": "High Growth Countries"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "f958bb0f59757cc876ed"
+}

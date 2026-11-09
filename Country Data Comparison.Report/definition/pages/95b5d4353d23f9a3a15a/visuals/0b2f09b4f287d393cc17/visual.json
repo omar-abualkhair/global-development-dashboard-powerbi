@@ -1,0 +1,242 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "0b2f09b4f287d393cc17",
+  "position": {
+    "x": 252.85714285714286,
+    "y": 10,
+    "z": 0,
+    "height": 280,
+    "width": 1377.1428571428573,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Recommendations Table"
+                    }
+                  },
+                  "Property": "Order"
+                }
+              },
+              "queryRef": "Sum(Recommendations Table.Order)",
+              "nativeQueryRef": "Order"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Recommendations Table"
+                    }
+                  },
+                  "Property": "Priority"
+                }
+              },
+              "queryRef": "Recommendations Table.Priority",
+              "nativeQueryRef": "Priority"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Recommendations Table"
+                    }
+                  },
+                  "Property": "Recommendation"
+                }
+              },
+              "queryRef": "Recommendations Table.Recommendation",
+              "nativeQueryRef": "Recommendation"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Recommendations Table"
+                    }
+                  },
+                  "Property": "Related Insight"
+                }
+              },
+              "queryRef": "Sum(Recommendations Table.Related Insight)",
+              "nativeQueryRef": "Related Insight"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Recommendations Table"
+                    }
+                  },
+                  "Property": "Why (Dynamic)"
+                }
+              },
+              "queryRef": "Recommendations Table.Why (Dynamic)",
+              "nativeQueryRef": "Why (Dynamic)"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Recommendations Table"
+                  }
+                },
+                "Property": "Order"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Insights Table"
+                        }
+                      },
+                      "Property": "Priority Color"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Sum(Recommendations Table.Order)"
+          }
+        },
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Recommendations Table"
+                        }
+                      },
+                      "Property": "Priority Background Color"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Recommendations Table.Priority"
+          }
+        },
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Insights Table"
+                        }
+                      },
+                      "Property": "Priority Color"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Recommendations Table.Recommendation"
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "94536f1cd1fba9400be4",
+  "position": {
+    "x": 162.5,
+    "y": 0,
+    "z": 0,
+    "height": 261.11111111111109,
+    "width": 1102.2222222222222,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Insights Table"
+                    }
+                  },
+                  "Property": "Insight"
+                }
+              },
+              "queryRef": "Insights Table.Insight",
+              "nativeQueryRef": "Insight"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Insights Table"
+                    }
+                  },
+                  "Property": "Evidence (Dynamic)"
+                }
+              },
+              "queryRef": "Insights Table.Evidence (Dynamic)",
+              "nativeQueryRef": "Evidence (Dynamic)"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Insights Table"
+                    }
+                  },
+                  "Property": "Recommendation"
+                }
+              },
+              "queryRef": "Insights Table.Recommendation",
+              "nativeQueryRef": "Recommendation"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Insights Table"
+                    }
+                  },
+                  "Property": "#"
+                }
+              },
+              "queryRef": "Sum(Insights Table.#)",
+              "nativeQueryRef": "#"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Insights Table"
+                  }
+                },
+                "Property": "Insight"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

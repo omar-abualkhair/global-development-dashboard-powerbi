@@ -1,0 +1,536 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "efd24f9cb24e884c30a8",
+  "position": {
+    "x": 202.85714285714286,
+    "y": 264.28571428571428,
+    "z": 4000,
+    "height": 320,
+    "width": 658.57142857142867,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Geography"
+                    }
+                  },
+                  "Property": "Country"
+                }
+              },
+              "queryRef": "Geography.Country",
+              "nativeQueryRef": "Country"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Economy"
+                        }
+                      },
+                      "Property": "GDP"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Economy.GDP)",
+              "nativeQueryRef": "Sum of GDP"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Economy"
+                    }
+                  },
+                  "Property": "GDP Rank"
+                }
+              },
+              "queryRef": "Economy.GDP Rank",
+              "nativeQueryRef": "GDP Rank"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Economy"
+                    }
+                  },
+                  "Property": "Inflation Rank"
+                }
+              },
+              "queryRef": "Economy.Inflation Rank",
+              "nativeQueryRef": "Inflation Rank"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trade_Finance"
+                    }
+                  },
+                  "Property": "Trade Balance"
+                }
+              },
+              "queryRef": "Trade_Finance.Trade Balance",
+              "nativeQueryRef": "Trade Balance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trade_Finance"
+                    }
+                  },
+                  "Property": "Trade Balance Indicator"
+                }
+              },
+              "queryRef": "Trade_Finance.Trade Balance Indicator",
+              "nativeQueryRef": "Trade Balance Indicator"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Trade_Finance"
+                  }
+                },
+                "Property": "Trade Balance"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "FillRule": {
+                      "Input": {
+                        "SelectRef": {
+                          "ExpressionName": "Trade_Finance.Trade Balance"
+                        }
+                      },
+                      "FillRule": {
+                        "linearGradient2": {
+                          "min": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'minColor'"
+                              }
+                            }
+                          },
+                          "max": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'maxColor'"
+                              }
+                            }
+                          },
+                          "nullColoringStrategy": {
+                            "strategy": {
+                              "Literal": {
+                                "Value": "'asZero'"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "icon": {
+              "kind": "Icon",
+              "layout": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Before'"
+                  }
+                }
+              },
+              "verticalAlignment": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Top'"
+                  }
+                }
+              },
+              "value": {
+                "expr": {
+                  "Conditional": {
+                    "Cases": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 2,
+                            "Left": {
+                              "SelectRef": {
+                                "ExpressionName": "Trade_Finance.Trade Balance"
+                              }
+                            },
+                            "Right": {
+                              "RangePercent": {
+                                "Min": {
+                                  "ScopedEval": {
+                                    "Expression": {
+                                      "Aggregation": {
+                                        "Expression": {
+                                          "ScopedEval": {
+                                            "Expression": {
+                                              "SelectRef": {
+                                                "ExpressionName": "Trade_Finance.Trade Balance"
+                                              }
+                                            },
+                                            "Scope": [
+                                              {
+                                                "AllRolesRef": {}
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "Function": 3
+                                      }
+                                    },
+                                    "Scope": []
+                                  }
+                                },
+                                "Max": {
+                                  "ScopedEval": {
+                                    "Expression": {
+                                      "Aggregation": {
+                                        "Expression": {
+                                          "ScopedEval": {
+                                            "Expression": {
+                                              "SelectRef": {
+                                                "ExpressionName": "Trade_Finance.Trade Balance"
+                                              }
+                                            },
+                                            "Scope": [
+                                              {
+                                                "AllRolesRef": {}
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "Function": 4
+                                      }
+                                    },
+                                    "Scope": []
+                                  }
+                                },
+                                "Percent": 0.67
+                              }
+                            }
+                          }
+                        },
+                        "Value": {
+                          "Literal": {
+                            "Value": "'CircleHigh'"
+                          }
+                        }
+                      },
+                      {
+                        "Condition": {
+                          "And": {
+                            "Left": {
+                              "Comparison": {
+                                "ComparisonKind": 2,
+                                "Left": {
+                                  "SelectRef": {
+                                    "ExpressionName": "Trade_Finance.Trade Balance"
+                                  }
+                                },
+                                "Right": {
+                                  "RangePercent": {
+                                    "Min": {
+                                      "ScopedEval": {
+                                        "Expression": {
+                                          "Aggregation": {
+                                            "Expression": {
+                                              "ScopedEval": {
+                                                "Expression": {
+                                                  "SelectRef": {
+                                                    "ExpressionName": "Trade_Finance.Trade Balance"
+                                                  }
+                                                },
+                                                "Scope": [
+                                                  {
+                                                    "AllRolesRef": {}
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "Function": 3
+                                          }
+                                        },
+                                        "Scope": []
+                                      }
+                                    },
+                                    "Max": {
+                                      "ScopedEval": {
+                                        "Expression": {
+                                          "Aggregation": {
+                                            "Expression": {
+                                              "ScopedEval": {
+                                                "Expression": {
+                                                  "SelectRef": {
+                                                    "ExpressionName": "Trade_Finance.Trade Balance"
+                                                  }
+                                                },
+                                                "Scope": [
+                                                  {
+                                                    "AllRolesRef": {}
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "Function": 4
+                                          }
+                                        },
+                                        "Scope": []
+                                      }
+                                    },
+                                    "Percent": 0.33
+                                  }
+                                }
+                              }
+                            },
+                            "Right": {
+                              "Comparison": {
+                                "ComparisonKind": 3,
+                                "Left": {
+                                  "SelectRef": {
+                                    "ExpressionName": "Trade_Finance.Trade Balance"
+                                  }
+                                },
+                                "Right": {
+                                  "RangePercent": {
+                                    "Min": {
+                                      "ScopedEval": {
+                                        "Expression": {
+                                          "Aggregation": {
+                                            "Expression": {
+                                              "ScopedEval": {
+                                                "Expression": {
+                                                  "SelectRef": {
+                                                    "ExpressionName": "Trade_Finance.Trade Balance"
+                                                  }
+                                                },
+                                                "Scope": [
+                                                  {
+                                                    "AllRolesRef": {}
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "Function": 3
+                                          }
+                                        },
+                                        "Scope": []
+                                      }
+                                    },
+                                    "Max": {
+                                      "ScopedEval": {
+                                        "Expression": {
+                                          "Aggregation": {
+                                            "Expression": {
+                                              "ScopedEval": {
+                                                "Expression": {
+                                                  "SelectRef": {
+                                                    "ExpressionName": "Trade_Finance.Trade Balance"
+                                                  }
+                                                },
+                                                "Scope": [
+                                                  {
+                                                    "AllRolesRef": {}
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "Function": 4
+                                          }
+                                        },
+                                        "Scope": []
+                                      }
+                                    },
+                                    "Percent": 0.67
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "Value": {
+                          "Literal": {
+                            "Value": "'SignMedium'"
+                          }
+                        }
+                      },
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 3,
+                            "Left": {
+                              "SelectRef": {
+                                "ExpressionName": "Trade_Finance.Trade Balance"
+                              }
+                            },
+                            "Right": {
+                              "RangePercent": {
+                                "Min": {
+                                  "ScopedEval": {
+                                    "Expression": {
+                                      "Aggregation": {
+                                        "Expression": {
+                                          "ScopedEval": {
+                                            "Expression": {
+                                              "SelectRef": {
+                                                "ExpressionName": "Trade_Finance.Trade Balance"
+                                              }
+                                            },
+                                            "Scope": [
+                                              {
+                                                "AllRolesRef": {}
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "Function": 3
+                                      }
+                                    },
+                                    "Scope": []
+                                  }
+                                },
+                                "Max": {
+                                  "ScopedEval": {
+                                    "Expression": {
+                                      "Aggregation": {
+                                        "Expression": {
+                                          "ScopedEval": {
+                                            "Expression": {
+                                              "SelectRef": {
+                                                "ExpressionName": "Trade_Finance.Trade Balance"
+                                              }
+                                            },
+                                            "Scope": [
+                                              {
+                                                "AllRolesRef": {}
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "Function": 4
+                                      }
+                                    },
+                                    "Scope": []
+                                  }
+                                },
+                                "Percent": 0.33
+                              }
+                            }
+                          }
+                        },
+                        "Value": {
+                          "Literal": {
+                            "Value": "'SignLow'"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Trade_Finance.Trade Balance"
+          }
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {},
+          "selector": {
+            "metadata": "Trade_Finance.Trade Balance"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0.4
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

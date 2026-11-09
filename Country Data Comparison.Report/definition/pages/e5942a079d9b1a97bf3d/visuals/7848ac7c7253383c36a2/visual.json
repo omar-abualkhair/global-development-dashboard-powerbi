@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "7848ac7c7253383c36a2",
+  "position": {
+    "x": 915.91836734693879,
+    "y": 0.35714285714281657,
+    "z": 3000,
+    "height": 84.285714285714292,
+    "width": 291.42857142857144,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Economy"
+                    }
+                  },
+                  "Property": "GDP Growth Indicator"
+                }
+              },
+              "queryRef": "Economy.GDP Growth Indicator",
+              "nativeQueryRef": "GDP Growth Indicator"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "f958bb0f59757cc876ed"
+}

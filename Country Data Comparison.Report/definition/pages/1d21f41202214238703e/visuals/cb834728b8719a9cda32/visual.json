@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "cb834728b8719a9cda32",
+  "position": {
+    "x": 287.92840909090916,
+    "y": 0,
+    "z": 3000,
+    "height": 84.642857142857139,
+    "width": 235.53409090909093,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Economy"
+                    }
+                  },
+                  "Property": "Average GDP"
+                }
+              },
+              "queryRef": "Economy.Average GDP",
+              "nativeQueryRef": "Average GDP"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Economy"
+                  }
+                },
+                "Property": "Average GDP"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "a8a35b61b2f3ed8aee1d"
+}

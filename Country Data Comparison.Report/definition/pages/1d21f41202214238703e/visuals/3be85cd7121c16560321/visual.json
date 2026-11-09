@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "3be85cd7121c16560321",
+  "position": {
+    "x": 1174.1166331513932,
+    "y": 0.30163746049985329,
+    "z": 2000,
+    "height": 84.745762711864415,
+    "width": 209.32203389830511,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Economy"
+                    }
+                  },
+                  "Property": "Lowest Inflation Country"
+                }
+              },
+              "queryRef": "Economy.Lowest Inflation Country",
+              "nativeQueryRef": "Lowest Inflation Country"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "a8a35b61b2f3ed8aee1d"
+}

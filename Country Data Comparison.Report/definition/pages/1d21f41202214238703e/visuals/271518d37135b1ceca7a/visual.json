@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "271518d37135b1ceca7a",
+  "position": {
+    "x": 859.93977272727284,
+    "y": 1.0714285714285741,
+    "z": 0,
+    "height": 84.642857142857139,
+    "width": 235.53409090909093,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Economy"
+                    }
+                  },
+                  "Property": "Highest GDP Country"
+                }
+              },
+              "queryRef": "Economy.Highest GDP Country",
+              "nativeQueryRef": "Highest GDP Country"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "a8a35b61b2f3ed8aee1d"
+}

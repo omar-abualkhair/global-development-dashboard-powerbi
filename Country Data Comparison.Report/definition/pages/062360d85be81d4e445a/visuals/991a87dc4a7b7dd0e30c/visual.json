@@ -1,0 +1,117 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "991a87dc4a7b7dd0e30c",
+  "position": {
+    "x": 15.686274509803921,
+    "y": 77.450980392156865,
+    "z": 1000,
+    "height": 539.21568627450984,
+    "width": 666.66666666666663,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "GLOBAL",
+                    "textStyle": {
+                      "fontFamily": "Cambria Math",
+                      "fontSize": "60pt",
+                      "color": "#e11818"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "DEVELOPMENT",
+                    "textStyle": {
+                      "fontFamily": "Cambria Math",
+                      "fontSize": "60pt",
+                      "color": "#e11818"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "world",
+                    "textStyle": {
+                      "fontFamily": "Cambria Math",
+                      "fontSize": "60pt",
+                      "color": "#e11818"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "METRICS DASHBOARD",
+                    "textStyle": {
+                      "fontFamily": "Cambria Math",
+                      "fontSize": "60pt",
+                      "color": "#e11818"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "80D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "fbb9edbbaa260743c9b1",
+  "position": {
+    "x": 915.91836734693879,
+    "y": 0.34358047016270632,
+    "z": 3000,
+    "height": 81.084990958408682,
+    "width": 291.42857142857144,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Military"
+                    }
+                  },
+                  "Property": "Average Infant Mortality"
+                }
+              },
+              "queryRef": "Military.Average Infant Mortality",
+              "nativeQueryRef": "Average Infant Mortality"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Military"
+                  }
+                },
+                "Property": "Average Infant Mortality"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "188659c86d8166815a13"
+}

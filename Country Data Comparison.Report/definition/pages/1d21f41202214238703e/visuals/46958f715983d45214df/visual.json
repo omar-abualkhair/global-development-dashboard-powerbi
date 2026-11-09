@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "46958f715983d45214df",
+  "position": {
+    "x": 577.93977272727273,
+    "y": 1.0714285714285741,
+    "z": 4000,
+    "height": 84.642857142857139,
+    "width": 235.53409090909093,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Health"
+                    }
+                  },
+                  "Property": "Average Life Expectancy"
+                }
+              },
+              "queryRef": "Health.Average Life Expectancy",
+              "nativeQueryRef": "Average Life Expectancy"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Health"
+                  }
+                },
+                "Property": "Average Life Expectancy"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "a8a35b61b2f3ed8aee1d"
+}

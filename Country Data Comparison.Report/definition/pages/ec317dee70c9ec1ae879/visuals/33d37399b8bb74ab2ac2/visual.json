@@ -1,0 +1,246 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "33d37399b8bb74ab2ac2",
+  "position": {
+    "x": 10,
+    "y": 0,
+    "z": 0,
+    "height": 240,
+    "width": 310,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Geography"
+                            }
+                          },
+                          "Hierarchy": "Region > Country"
+                        }
+                      },
+                      "Level": "Country"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(Geography.Region > Country.Country)",
+              "nativeQueryRef": "Region > Country Country"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Health"
+                    }
+                  },
+                  "Property": "Average Life Expectancy"
+                }
+              },
+              "queryRef": "Health.Average Life Expectancy",
+              "nativeQueryRef": "Average Life Expectancy"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Military"
+                    }
+                  },
+                  "Property": "Average Infant Mortality"
+                }
+              },
+              "queryRef": "Military.Average Infant Mortality",
+              "nativeQueryRef": "Average Infant Mortality"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Economy"
+                        }
+                      },
+                      "Property": "GDP Per Capita"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Avg(Economy.GDP Per Capita)",
+              "nativeQueryRef": "Average of GDP Per Capita1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Economy"
+                    }
+                  },
+                  "Property": "GDP Rank"
+                }
+              },
+              "queryRef": "Economy.GDP Rank",
+              "nativeQueryRef": "GDP Rank"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "HierarchyLevel": {
+                    "Expression": {
+                      "Hierarchy": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Geography"
+                          }
+                        },
+                        "Hierarchy": "Region > Country"
+                      }
+                    },
+                    "Level": "Country"
+                  }
+                },
+                "Function": 3
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "layout": [
+        {
+          "properties": {
+            "orientation": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'top'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "shapeCustomRectangle": [
+        {
+          "properties": {
+            "rectangleRoundedCurve": {
+              "expr": {
+                "Literal": {
+                  "Value": "9L"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "shadowCustom": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "value": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            },
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "cardCalloutArea": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

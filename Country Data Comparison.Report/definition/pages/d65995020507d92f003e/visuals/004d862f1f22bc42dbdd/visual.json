@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "004d862f1f22bc42dbdd",
+  "position": {
+    "x": 628.77551020408157,
+    "y": 3.0922242314646979,
+    "z": 0,
+    "height": 81.428571428571431,
+    "width": 235.53409090909093,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Population"
+                    }
+                  },
+                  "Property": "Average Death Rate"
+                }
+              },
+              "queryRef": "Population.Average Death Rate",
+              "nativeQueryRef": "Average Death Rate"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Population"
+                  }
+                },
+                "Property": "Average Death Rate"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "188659c86d8166815a13"
+}

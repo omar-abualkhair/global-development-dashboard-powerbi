@@ -1,0 +1,119 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "4d9fd52005e9314a2f69",
+  "position": {
+    "x": 261.42857142857144,
+    "y": 307.14285714285717,
+    "z": 1000,
+    "height": 215.46391752577321,
+    "width": 1368.0412371134021,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Start with the High priority item: report the median next to the average in every economic KPI, because a few extreme countries pull the averages far above the typical country (average GDP 243bn vs median 16.25bn).",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "12pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Then compare trade-deficit countries by region and income level before drawing conclusions, since 154 of the 223 countries with trade data run a deficit but the global total is close to zero by construction.",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "12pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Finally, ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "12pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "state how many countries have data in every energy visual, because oil imports are missing for 80.5% of countries. The last item is low priority.",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "12pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
