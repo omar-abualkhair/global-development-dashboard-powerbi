@@ -1,0 +1,42 @@
+relationship AutoDetected_8b554f5d-089d-4764-9fd7-06683de12236
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Population.Country
+	toColumn: Geography.Country
+
+relationship AutoDetected_5583eb40-0ce1-48ba-baaa-375af1d38529
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Health.Country
+	toColumn: Geography.Country
+
+relationship AutoDetected_2bdc44e2-43a1-4ac4-8edd-154be161a6f0
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Economy.Country
+	toColumn: Geography.Country
+
+relationship AutoDetected_dcdd68a2-8d1b-4ebd-9ca8-a3a1335a7cad
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Trade_Finance.Country
+	toColumn: Geography.Country
+
+relationship AutoDetected_f3783070-22cf-4acd-acc1-ead193009a2b
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Energy.Country
+	toColumn: Geography.Country
+
+relationship AutoDetected_52f8a667-988f-4517-8d6e-d9ff8cec8aa8
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Infrastructure.Country
+	toColumn: Geography.Country
+
+relationship AutoDetected_bf2b74b1-056e-473f-8dcb-cadb70c94c84
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Military.Country
+	toColumn: Geography.Country
+

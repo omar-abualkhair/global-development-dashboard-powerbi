@@ -1,0 +1,56 @@
+table Geography
+	lineageTag: a69b7c38-99af-4a0f-8955-052cef004cb3
+
+	measure 'Country Profile Title' =
+			
+			"Country Profile | " & SELECTEDVALUE(Geography[Country], "Right-click a country and choose Drill through")
+		lineageTag: 0724cf12-f41c-467f-88cc-93fc71f3f17c
+
+	column Country
+		dataType: string
+		lineageTag: 94e4e28e-fb6a-4b2d-97a3-ba21027c2de0
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: fb16b243-22ba-4389-b35d-05f6656784cf
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Area
+		dataType: int64
+		formatString: 0
+		lineageTag: 97e970d9-32ed-4f31-b3b4-0c26b30bd4fd
+		summarizeBy: sum
+		sourceColumn: Area
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Region > Country'
+		lineageTag: 7489c97d-7449-466f-b4d3-15f6695979cd
+
+		level Region
+			lineageTag: 56069694-78ef-4a58-85ec-9cf3a59febe3
+			column: Region
+
+		level Country
+			lineageTag: 7937962c-3bf7-4e59-b052-657ddbc76333
+			column: Country
+
+	partition Geography = m
+		mode: import
+		source =
+				let
+				    Source = Stg_Country,
+				    Result = Table.SelectColumns(Source, {"Country", "Region", "Area"})
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
+

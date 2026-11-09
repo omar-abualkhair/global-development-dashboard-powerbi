@@ -1,0 +1,79 @@
+table Infrastructure
+	lineageTag: a7a21d74-3309-4890-8012-faa1b0fdf6c5
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: 5cdc7a7c-bcc4-4f8c-b1d5-abd8d5b0a86f
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Highways Length'
+		dataType: int64
+		formatString: 0
+		lineageTag: dc9ec672-fa89-478a-96e1-02cdccf0b82e
+		summarizeBy: sum
+		sourceColumn: Highways Length
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Railways Length'
+		dataType: int64
+		formatString: 0
+		lineageTag: b7d5505b-1ff6-44c0-b927-b0a50cd1bf5e
+		summarizeBy: sum
+		sourceColumn: Railways Length
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Internet Users'
+		dataType: int64
+		formatString: 0
+		lineageTag: ff743a89-ef77-4de3-a806-03f3c3f920a9
+		summarizeBy: sum
+		sourceColumn: Internet Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Internet Hosts'
+		dataType: int64
+		formatString: 0
+		lineageTag: b5b0f9fb-59f2-40bc-a64e-48bfceba4aed
+		summarizeBy: sum
+		sourceColumn: Internet Hosts
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fixed Phone Lines'
+		dataType: int64
+		formatString: 0
+		lineageTag: d1b2f5af-7d81-4f51-85bf-0e1f2b8bc5f7
+		summarizeBy: sum
+		sourceColumn: Fixed Phone Lines
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mobile Subscriptions'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f5373d9-6bfd-4537-a089-70cac696eb8e
+		summarizeBy: sum
+		sourceColumn: Mobile Subscriptions
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Infrastructure = m
+		mode: import
+		source =
+				let
+				    Source = Stg_Country,
+				    Result = Table.SelectColumns(Source, {"Country", "Highways Length", "Railways Length", "Internet Users", "Internet Hosts", "Fixed Phone Lines", "Mobile Subscriptions"})
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
+

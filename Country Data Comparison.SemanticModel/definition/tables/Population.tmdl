@@ -1,0 +1,138 @@
+table Population
+	lineageTag: 9c27953e-f9c1-4e15-af1f-1e4b634b0518
+
+	measure 'Total Population' = SUM(Population[Population])
+		formatString: 0
+		lineageTag: 6dc61caa-b002-446c-bede-2e9b7c732720
+
+	measure 'Average Birth Rate' = AVERAGE(Population[Birth Rate])
+		lineageTag: 647f0aaa-cc83-4606-bb44-dfc23efa0e02
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Death Rate' = AVERAGE(Population[Death Rate])
+		lineageTag: e6637485-2114-4af4-aafc-5580399d572b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Population Density' = DIVIDE(SUM(Population[Population]), SUM(Geography[Area]))
+		lineageTag: 8e3c29a3-8542-4c0b-bb6f-cf34ae8be7d5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Population Density Indicator' = ```
+			
+			IF(
+			    ISBLANK([Population Density]), 
+			    "No Data",
+			    IF([Population Density] >= 150, "High Density",
+			    IF([Population Density] >= 50, "Medium Density", "Low Density"))
+			)
+			```
+		lineageTag: 3deab46d-3768-43e2-882f-ae94f01cba2e
+
+	measure 'Life Expectancy Color' =
+			
+			SWITCH(
+			    TRUE(),
+			    ISBLANK([Average Life Expectancy]), "#B4BFCB",
+			    [Average Life Expectancy] < 60, "#E8806A",
+			    [Average Life Expectancy] < 70, "#F2B45A",
+			    "#7FC48A"
+			)
+		lineageTag: bfb894b1-5335-4e7b-8eee-50832be23ac6
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: 68e1247d-32e0-4e9c-bb59-8f95bc45a006
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Population
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b06b654-7360-4f5b-aafc-985b30cc82a5
+		summarizeBy: sum
+		sourceColumn: Population
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Birth Rate'
+		dataType: double
+		lineageTag: 9e565df1-fe6b-43b2-b299-c4833bb1ff83
+		summarizeBy: average
+		sourceColumn: Birth Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Death Rate'
+		dataType: double
+		lineageTag: 43034336-0423-485b-8872-b704c8e48716
+		summarizeBy: average
+		sourceColumn: Death Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fertility Rate'
+		dataType: double
+		lineageTag: 14300716-94c1-4ee1-90ce-4c614ad85f37
+		summarizeBy: average
+		sourceColumn: Fertility Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Labor Force'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5bff0750-97e0-4767-a117-ebe77dae9415
+		summarizeBy: sum
+		sourceColumn: Labor Force
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pop Category'
+		dataType: string
+		lineageTag: d6b4413b-9d3b-42b6-be34-8b3f83246088
+		summarizeBy: none
+		sourceColumn: Pop Category
+		sortByColumn: 'Population Category Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Population Category Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 05dd6f5c-253e-4112-bdfe-b5d8c5c277e0
+		summarizeBy: sum
+		sourceColumn: Population Category Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Population = m
+		mode: import
+		source =
+				let
+				    Source = Stg_Country,
+				    Result = Table.SelectColumns(Source, {"Country", "Population", "Birth Rate", "Death Rate", "Fertility Rate", "Labor Force", "Population Category", "Population Category Order"}),
+				    #"Renamed Columns" = Table.RenameColumns(Result,{{"Population Category", "Pop Category"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

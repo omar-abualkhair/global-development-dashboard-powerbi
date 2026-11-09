@@ -1,0 +1,58 @@
+table 'Cleaning Result'
+	lineageTag: 61217579-787d-4521-ba89-21b6e0254412
+
+	column Order
+		isHidden
+		formatString: 0
+		lineageTag: 97992ba9-9f90-412f-a605-5c135e867d58
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		lineageTag: 508a7382-4402-4db5-a219-854f29de58e9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Item]
+		sortByColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Before
+		lineageTag: 11711355-ee9f-4935-a445-f07a35ea8147
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Before]
+
+		annotation SummarizationSetBy = Automatic
+
+	column After
+		lineageTag: 4d09c297-c3b4-4238-9366-00143618d3a5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [After]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Cleaning Result' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Order", INTEGER,
+				    "Item", STRING,
+				    "Before", STRING,
+				    "After", STRING,
+				    {
+				        {1, "Rows", "263", "231 countries"},
+				        {2, "Columns", "45", "54 (44 renamed indicators, Region, 4 categories, 4 order columns)"},
+				        {3, "Data types", "All text", "Text, whole number and decimal, as appropriate"},
+				        {4, "Country names", "15 inverted or outdated", "Standardized"},
+				        {5, "Structure", "One wide table", "8 subject tables joined on Country"}
+				    }
+				)
+
+	annotation PBI_Id = fc4593ac55c346ac9501f3ef23ec43af
+

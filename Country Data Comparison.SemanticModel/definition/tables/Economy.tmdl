@@ -1,0 +1,333 @@
+table Economy
+	lineageTag: be11dc1c-89cd-4820-aa21-7724f6dadb4d
+
+	measure 'Average GDP' = AVERAGE(Economy[GDP])
+		lineageTag: 277885d7-1f2d-4c1c-80cb-7bf722935803
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average GDP Growth' = AVERAGE(Economy[GDP Growth Rate])
+		formatString: 0.0
+		lineageTag: 9e8b978c-adf1-444c-a937-96c4465f0cc2
+
+	measure 'GDP Growth Indicator' =
+			
+			IF(
+			    ISBLANK([Average GDP Growth]), "No Data",
+			    IF([Average GDP Growth] >= 6, "High Growth",
+			        IF([Average GDP Growth] >= 3, "Moderate Growth",
+			            IF([Average GDP Growth] >= 0, "Low Growth", "Contracting")
+			        )
+			    )
+			)
+		lineageTag: 2a2a8d90-3fcf-4032-8406-cc2a3447da13
+
+	measure 'Country Count' = DISTINCTCOUNT(Geography[Country])
+		formatString: 0
+		lineageTag: ed705adf-ec15-4581-9d54-2d7153885c2e
+
+	measure 'High Growth Countries' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(Geography[Country]),
+			    Economy[Growth Indicator Category] = "High Growth"
+			)
+		formatString: 0
+		lineageTag: 2401c907-d323-4c37-afb0-8154e1ffc3a1
+
+	measure 'Highest GDP Country' =
+			
+			VAR MaxGDP = MAX(Economy[GDP])
+			RETURN
+			    CONCATENATEX(
+			        FILTER(
+			            VALUES(Geography[Country]),
+			            CALCULATE(MAX(Economy[GDP])) = MaxGDP
+			        ),
+			        Geography[Country],
+			        ", "
+			    )
+		lineageTag: 392175ee-d617-4caf-8afd-edaa0389534a
+
+	measure 'Lowest Inflation Country' =
+			
+			VAR MinInflation = MIN(Economy[Inflation Rate])
+			RETURN
+			    CONCATENATEX(
+			        FILTER(
+			            VALUES(Geography[Country]),
+			            CALCULATE(MIN(Economy[Inflation Rate])) = MinInflation
+			        ),
+			        Geography[Country],
+			        ", "
+			    )
+		lineageTag: 7f339e43-fda2-4617-b8d7-5eea0129629f
+
+	measure 'GDP Rank' =
+			
+			IF(
+			    ISBLANK(MAX(Economy[GDP])),
+			    BLANK(),
+			    RANKX(
+			        FILTER(
+			            ALL(Geography[Country]),
+			            NOT ISBLANK(CALCULATE(MAX(Economy[GDP])))
+			        ),
+			        CALCULATE(MAX(Economy[GDP])),
+			        ,
+			        DESC,
+			        Skip
+			    )
+			)
+		formatString: 0
+		lineageTag: 794c44e6-7fd5-4966-a142-94ea75b4ad35
+
+	measure 'Inflation Rank' =
+			
+			IF(
+			    ISBLANK(MAX(Economy[Inflation Rate])),
+			    BLANK(),
+			    RANKX(
+			        FILTER(
+			            ALL(Geography[Country]),
+			            NOT ISBLANK(CALCULATE(MAX(Economy[Inflation Rate])))
+			        ),
+			        CALCULATE(MAX(Economy[Inflation Rate])),
+			        ,
+			        ASC,
+			        Skip
+			    )
+			)
+		formatString: 0
+		lineageTag: 698bd5d3-300e-4f8d-b16a-094d88662f0e
+
+	measure 'Dynamic Title' =
+			
+			"Economic Overview | " &
+			IF(
+			    ISFILTERED(Geography[Region]),
+			    IF(HASONEVALUE(Geography[Region]), SELECTEDVALUE(Geography[Region]), "Selected Regions"),
+			    "All Regions"
+			) &
+			" | " & FORMAT([Country Count], "0") & " countries"
+		lineageTag: 077f46f8-209d-4d46-916a-b0f0c5a1321b
+
+	measure 'Growth Color' =
+			
+			SWITCH([GDP Growth Indicator],
+			    "High Growth", "#1E8449",
+			    "Moderate Growth", "#82C341",
+			    "Low Growth", "#F39C12",
+			    "Contracting", "#C0392B",
+			    "#808080")
+		lineageTag: 6d2c1fd2-89b4-42fa-8944-74d5d79b1bd3
+
+	measure Measure
+		lineageTag: f1da2e1c-d283-46e3-9ec3-9b961d04be42
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'Economic Title' =
+			
+			"Economic Performance | " &
+			IF(ISFILTERED(Geography[Region]),
+			   IF(HASONEVALUE(Geography[Region]), SELECTEDVALUE(Geography[Region]), "Selected Regions"),
+			   "All Regions")
+		lineageTag: 72001775-6286-494f-876a-827af97cdbd3
+
+	measure 'Average Inflation' = AVERAGE(Economy[Inflation Rate])
+		lineageTag: 90452078-2443-4e22-8350-b86a9e2df5af
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Median GDP' = MEDIAN(Economy[GDP])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 57b805ef-5201-46d9-bff6-031c119a0015
+
+	measure 'Median Inflation' = MEDIAN(Economy[Inflation Rate])
+		formatString: 0.00
+		lineageTag: 395b1bb1-9860-48a2-93b2-6a0e0b972120
+
+	measure 'Median GDP Growth' = MEDIAN(Economy[GDP Growth Rate])
+		formatString: 0.00
+		lineageTag: c6530b86-d636-4c2b-8b17-288386285afb
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: fc178ec6-4032-4d49-8799-0fa6307cfdbb
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column GDP
+		dataType: int64
+		formatString: 0
+		lineageTag: 4ec11a37-59dd-41eb-b18b-4a594ced0fa0
+		summarizeBy: sum
+		sourceColumn: GDP
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GDP Per Capita'
+		dataType: int64
+		formatString: 0
+		lineageTag: a4b124f3-b127-4e9a-b711-f665a85d3153
+		summarizeBy: average
+		sourceColumn: GDP Per Capita
+
+		annotation SummarizationSetBy = User
+
+	column 'GDP Growth Rate'
+		dataType: double
+		lineageTag: 35ba15b0-e928-42f2-acac-0cba896c88eb
+		summarizeBy: average
+		sourceColumn: GDP Growth Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Inflation Rate'
+		dataType: double
+		lineageTag: 53e9f22b-5d79-41e0-8825-f67e3f3e009b
+		summarizeBy: average
+		sourceColumn: Inflation Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Unemployment Rate'
+		dataType: double
+		lineageTag: 2d623fed-a49e-4c9a-aee1-63d2bffad5df
+		summarizeBy: average
+		sourceColumn: Unemployment Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Industrial Growth Rate'
+		dataType: double
+		lineageTag: 72b15b25-d523-4f30-a0ec-f042b4740df9
+		summarizeBy: average
+		sourceColumn: Industrial Growth Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Investment Pct GDP'
+		dataType: double
+		lineageTag: 4c0d30ea-93be-4698-b719-6f8937468d8c
+		summarizeBy: sum
+		sourceColumn: Investment Pct GDP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Public Debt Pct GDP'
+		dataType: double
+		lineageTag: 29c51e89-5521-4761-b9ec-b4ebb5eda398
+		summarizeBy: average
+		sourceColumn: Public Debt Pct GDP
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'External Debt'
+		dataType: int64
+		formatString: 0
+		lineageTag: f52cb5f7-dd0c-4cdf-879f-25d1f2eec3a2
+		summarizeBy: sum
+		sourceColumn: External Debt
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GDP Category'
+		dataType: string
+		lineageTag: ef81805b-7c88-48bf-8862-95a3f0d69ff4
+		summarizeBy: none
+		sourceColumn: GDP Category
+		sortByColumn: 'GDP Category Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GDP Category Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a560966a-23ef-41f8-a91f-ac4c8a1dcfb5
+		summarizeBy: sum
+		sourceColumn: GDP Category Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dev. Level'
+		dataType: string
+		lineageTag: 85ab54e0-80e4-41df-8e29-b5657d87c8a0
+		summarizeBy: none
+		sourceColumn: Dev. Level
+		sortByColumn: 'Development Level Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Development Level Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 799ce677-404d-4828-b836-05bc416e455a
+		summarizeBy: sum
+		sourceColumn: Development Level Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Growth Indicator Category'
+		dataType: string
+		lineageTag: 09dac706-3669-4dc9-9629-265e868f2be9
+		summarizeBy: none
+		sourceColumn: Growth Indicator Category
+		sortByColumn: 'Growth Indicator Category Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Growth Indicator Category Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 37da9f08-b9c7-4c93-8bd2-ede28a9b3941
+		summarizeBy: sum
+		sourceColumn: Growth Indicator Category Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Economy = m
+		mode: import
+		source =
+				let
+				    Source = Stg_Country,
+				    Result = Table.SelectColumns(Source, {"Country", "GDP", "GDP Per Capita", "GDP Growth Rate", "Inflation Rate", "Unemployment Rate", "Industrial Growth Rate", "Investment Pct GDP", "Public Debt Pct GDP", "External Debt", "GDP Category", "GDP Category Order", "Development Level", "Development Level Order", "Growth Indicator Category", "Growth Indicator Category Order"}),
+				    #"Renamed Columns" = Table.RenameColumns(Result,{{"Development Level", "Dev. Level"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

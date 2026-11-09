@@ -1,0 +1,103 @@
+table Health
+	lineageTag: 2e1f2888-1de5-4c0c-8b83-19fb84db357f
+
+	measure 'Average Life Expectancy' = AVERAGE(Health[Life Expectancy])
+		lineageTag: b2328478-26b8-437b-9a46-012ac3712aaf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dynamic Title Health' = ```
+			
+			VAR SelectedRegion = 
+			    IF(
+			        ISFILTERED(Geography[Region]),
+			        IF(HASONEVALUE(Geography[Region]), SELECTEDVALUE(Geography[Region]), "Multiple Regions"),
+			        "All Regions"
+			    )
+			VAR SelectedDev = 
+			    IF(
+			        ISFILTERED(Economy[Dev. Level]),
+			        IF(HASONEVALUE(Economy[Dev. Level]), " | " & SELECTEDVALUE(Economy[Dev. Level]), " | Multiple Dev Levels"),
+			        ""
+			    )
+			VAR CountryCountFormatted = FORMAT([Country Count], "#,##0") & " Countries"
+			
+			RETURN
+			    "Health & Demographic Overview | " & SelectedRegion & SelectedDev & " | " & CountryCountFormatted
+			```
+		lineageTag: 74293e1e-cef1-46ba-b82e-dc5d2324a752
+
+	measure 'Median Life Expectancy' = MEDIAN(Health[Life Expectancy])
+		formatString: 0.00
+		lineageTag: 4637e35b-6884-47f3-a0e5-e40450783162
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: afe82e79-3f81-4f29-9650-cfde724feefe
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Life Expectancy'
+		dataType: double
+		lineageTag: b38366c2-ef15-4c46-b3da-b4d3c18700a3
+		summarizeBy: average
+		sourceColumn: Life Expectancy
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Infant Mortality Rate'
+		dataType: double
+		lineageTag: a4e4c08d-0ce3-439e-9061-5e4d6626dd78
+		summarizeBy: average
+		sourceColumn: Infant Mortality Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'HIV Prevalence Rate'
+		dataType: double
+		lineageTag: dab7aa26-5618-4463-aa97-911a0f2a9037
+		summarizeBy: average
+		sourceColumn: HIV Prevalence Rate
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'HIV Deaths'
+		dataType: int64
+		formatString: 0
+		lineageTag: b4e79dd7-7a2a-4604-96e8-c2f7b227a092
+		summarizeBy: sum
+		sourceColumn: HIV Deaths
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HIV Cases'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ee7b20b-50b7-43ce-9767-0d0e7fb59c3d
+		summarizeBy: sum
+		sourceColumn: HIV Cases
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Health = m
+		mode: import
+		source =
+				let
+				    Source = Stg_Country,
+				    Result = Table.SelectColumns(Source, {"Country", "Life Expectancy", "Infant Mortality Rate", "HIV Prevalence Rate", "HIV Deaths", "HIV Cases"})
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
+

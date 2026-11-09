@@ -1,0 +1,98 @@
+table 'Recommendations Table'
+	lineageTag: 740f4aed-c401-49ce-98ef-19cf0ea3b97c
+
+	measure 'Priority Background Color' =
+			
+			SWITCH(
+			    SELECTEDVALUE('Recommendations Table'[Priority]),
+			    "High", "#F8CFCF",
+			    "Medium", "#FDE0B0",
+			    "Low", "#D5EFD9",
+			    "#EEEEEE"
+			)
+		lineageTag: 8eb93282-de45-4287-866e-39d9d12744e3
+
+	measure 'Why (Dynamic)' =
+			
+			VAR WithTrade =
+			    COUNTROWS(FILTER(Trade_Finance,
+			        NOT ISBLANK(Trade_Finance[Exports]) && NOT ISBLANK(Trade_Finance[Imports])))
+			VAR Deficit =
+			    COUNTROWS(FILTER(Trade_Finance,
+			        NOT ISBLANK(Trade_Finance[Exports]) && NOT ISBLANK(Trade_Finance[Imports])
+			        && Trade_Finance[Exports] < Trade_Finance[Imports]))
+			RETURN
+			SWITCH(
+			    SELECTEDVALUE('Recommendations Table'[Order]),
+			    1, "Average GDP is " & FORMAT([Average GDP] / 1000000000, "0")
+			        & "bn but the median is " & FORMAT(MEDIAN(Economy[GDP]) / 1000000000, "0.00")
+			        & "bn, so the average alone misleads",
+			    2, FORMAT(Deficit, "0") & " of " & FORMAT(WithTrade, "0")
+			        & " countries run a deficit, but the global total is close to zero by construction",
+			    3, "Oil imports are missing for "
+			        & FORMAT(DIVIDE(COUNTBLANK(Energy[Oil Imports]), COUNTROWS(Energy)), "0.0%")
+			        & " of countries, so rankings rest on few countries"
+			)
+		lineageTag: 8b2df2d9-22d9-4fca-8fdc-9bd034f60830
+
+	column Order
+		formatString: 0
+		lineageTag: 4ed33b51-1b38-491e-877c-97d36bf76b11
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority
+		lineageTag: a54906fe-474b-4591-99ff-1260357fec1f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Priority]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Recommendation
+		lineageTag: a751cbdd-8163-4a49-b39a-4829e96dc773
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Recommendation]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Related Insight'
+		formatString: 0
+		lineageTag: 09d3abcd-9eaa-41f0-9440-7070d8d3b071
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Related Insight]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Why
+		lineageTag: c341dda8-66f2-4298-90df-21e07f2c2bc9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Why]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Recommendations Table' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Order", INTEGER,
+				    "Priority", STRING,
+				    "Recommendation", STRING,
+				    "Related Insight", INTEGER,
+				    "Why", STRING,
+				    {
+				        {1, "High", "Report the median next to the average in every economic KPI", 1, "Average GDP is 243bn but the median is 16.25bn, so the average alone misleads"},
+				        {2, "Medium", "Compare trade-deficit countries by region and income level before drawing conclusions", 3, "154 of 223 countries run a deficit, but the global total is close to zero by construction"},
+				        {3, "Low", "State how many countries have data in every energy visual", 5, "Oil imports are missing for 80.5% of countries, so rankings rest on few countries"}
+				    }
+				)
+
+	annotation PBI_Id = 391d98557220402faf54ce01217d9605
+

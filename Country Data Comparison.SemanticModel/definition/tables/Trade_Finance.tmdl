@@ -1,0 +1,94 @@
+table Trade_Finance
+	lineageTag: 53ddb672-0a95-4c69-84a6-7733fdd888e4
+
+	measure 'Trade Balance' =
+			
+			SUMX(
+			    FILTER(
+			        Trade_Finance,
+			        NOT ISBLANK(Trade_Finance[Exports]) && NOT ISBLANK(Trade_Finance[Imports])
+			    ),
+			    Trade_Finance[Exports] - Trade_Finance[Imports]
+			)
+		formatString: 0
+		lineageTag: 0d034fd0-2c79-4d22-800e-eadb10ae7cdc
+
+	measure 'Trade Balance Indicator' =
+			
+			IF(
+			    ISBLANK([Trade Balance]), "No Data",
+			    IF([Trade Balance] > 0, "Surplus",
+			        IF([Trade Balance] < 0, "Deficit", "Balanced")
+			    )
+			)
+		lineageTag: 452e8f89-fe36-41f4-867d-87fa49239855
+
+	measure 'Trade Balance Color' =
+			
+			SWITCH(
+			    [Trade Balance Indicator],
+			    "Surplus", "#2E8B57",
+			    "Deficit", "#C0392B",
+			    "Balanced", "#F1C40F",
+			    "#808080"
+			)
+		lineageTag: 48527b0d-3afe-4940-abd9-e1b76ea7eb1f
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: c0bc1851-41c8-479a-9693-b2ae0556ea41
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Exports
+		dataType: int64
+		formatString: 0
+		lineageTag: b1659f53-ea9b-4357-9679-e4695fb1f6e6
+		summarizeBy: sum
+		sourceColumn: Exports
+
+		annotation SummarizationSetBy = Automatic
+
+	column Imports
+		dataType: int64
+		formatString: 0
+		lineageTag: bd3f1ec3-df79-4e4a-990a-368b118415b1
+		summarizeBy: sum
+		sourceColumn: Imports
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Account Balance'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b64a8ba-efdd-42ca-be7c-cc3abaaaab80
+		summarizeBy: sum
+		sourceColumn: Current Account Balance
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Foreign Reserves'
+		dataType: int64
+		formatString: 0
+		lineageTag: f9635188-d10e-4286-9af3-5d9460f2c5ba
+		summarizeBy: sum
+		sourceColumn: Foreign Reserves
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Trade_Finance = m
+		mode: import
+		source =
+				let
+				    Source = Stg_Country,
+				    Result = Table.SelectColumns(Source, {"Country", "Exports", "Imports", "Current Account Balance", "Foreign Reserves"})
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
+

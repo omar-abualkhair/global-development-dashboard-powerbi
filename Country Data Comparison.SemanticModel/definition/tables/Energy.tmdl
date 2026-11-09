@@ -1,0 +1,133 @@
+table Energy
+	lineageTag: 47dbe880-b9a8-4c5a-b968-a9465ad8dd95
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: 4f482f88-54b0-4023-bd64-c7411ad80654
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Electricity Consumption'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6abca51a-8d8d-4592-aa50-427ba6295c09
+		summarizeBy: sum
+		sourceColumn: Electricity Consumption
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Electricity Production'
+		dataType: int64
+		formatString: 0
+		lineageTag: 152ecfc1-aee7-4bde-b285-593c10782c40
+		summarizeBy: sum
+		sourceColumn: Electricity Production
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Oil Consumption'
+		dataType: int64
+		formatString: 0
+		lineageTag: ff49cb39-51f2-4b61-956b-59ebd060a9a2
+		summarizeBy: sum
+		sourceColumn: Oil Consumption
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Oil Exports'
+		dataType: int64
+		formatString: 0
+		lineageTag: ebe1b717-3d11-4cb9-a3ff-559aba3927ed
+		summarizeBy: sum
+		sourceColumn: Oil Exports
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Oil Imports'
+		dataType: int64
+		formatString: 0
+		lineageTag: f43c9439-8566-4848-adae-a2dba4538961
+		summarizeBy: sum
+		sourceColumn: Oil Imports
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Oil Production'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e94d595-ff77-4612-be89-fbe18f0c5605
+		summarizeBy: sum
+		sourceColumn: Oil Production
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Oil Reserves'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a264538-bc27-4057-bb2d-8228aa20a683
+		summarizeBy: sum
+		sourceColumn: Oil Reserves
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gas Consumption'
+		dataType: int64
+		formatString: 0
+		lineageTag: c5b607bf-1561-448f-ac29-6990672b5b47
+		summarizeBy: sum
+		sourceColumn: Gas Consumption
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gas Exports'
+		dataType: int64
+		formatString: 0
+		lineageTag: b8985d65-d7db-413f-80d0-f1a4053fcb59
+		summarizeBy: sum
+		sourceColumn: Gas Exports
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gas Imports'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f9a97e2-ffc9-40d0-835b-26846263f381
+		summarizeBy: sum
+		sourceColumn: Gas Imports
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gas Production'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ec76be9-c9f8-4d3d-835f-0f56a861071e
+		summarizeBy: sum
+		sourceColumn: Gas Production
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gas Reserves'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9cebdfff-edac-4fdf-8df2-04fe3a3c7122
+		summarizeBy: sum
+		sourceColumn: Gas Reserves
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Energy = m
+		mode: import
+		source =
+				let
+				    Source = Stg_Country,
+				    Result = Table.SelectColumns(Source, {"Country", "Electricity Consumption", "Electricity Production", "Oil Consumption", "Oil Exports", "Oil Imports", "Oil Production", "Oil Reserves", "Gas Consumption", "Gas Exports", "Gas Imports", "Gas Production", "Gas Reserves"})
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
+

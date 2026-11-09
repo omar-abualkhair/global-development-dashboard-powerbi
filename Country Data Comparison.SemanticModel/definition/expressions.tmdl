@@ -1,0 +1,213 @@
+expression Stg_Country =
+		let
+		    Source = Csv.Document(File.Contents("C:\Data\Country Data Comparison.csv"), [Delimiter = ";", Columns = 45, QuoteStyle = QuoteStyle.None]),
+		
+		    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+		
+		    TrimmedText = Table.TransformColumns(
+		        PromotedHeaders,
+		        List.Transform(Table.ColumnNames(PromotedHeaders), each {_, each Text.Trim(_), type nullable text})
+		    ),
+		
+		    RemovedTopRows = Table.Skip(TrimmedText, 1),
+		
+		    EmptyToNull = Table.ReplaceValue(RemovedTopRows, "", null, Replacer.ReplaceValue, Table.ColumnNames(RemovedTopRows)),
+		
+		    TypeList = List.Transform(
+		        Table.ColumnNames(EmptyToNull),
+		        (col) =>
+		            let
+		                values     = List.RemoveNulls(Table.Column(EmptyToNull, col)),
+		                nums       = List.Transform(values, each try Number.FromText(_, "en-US") otherwise null),
+		                allNumeric = List.Count(values) > 0 and not List.Contains(nums, null),
+		                allWhole   = allNumeric and List.AllTrue(List.Transform(nums, each _ = Number.RoundDown(_)))
+		            in
+		                {col, if allWhole then Int64.Type else if allNumeric then type number else type text}
+		    ),
+		       ChangedTypes = Table.TransformColumnTypes(EmptyToNull, TypeList, "en-US"),
+		  #"Filtered rows" = Table.SelectRows(ChangedTypes, each ([Country] <> "#European Union")),
+		  #"Added custom" = Table.AddColumn(#"Filtered rows", "NonNullCount", each List.NonNullCount(List.Skip(Record.FieldValues(_), 1))),
+		  #"Filtered rows 1" = Table.SelectRows(#"Added custom", each [NonNullCount] >= 9),
+		    RemovedHelper = Table.RemoveColumns(#"Filtered rows 1", {"NonNullCount"}),
+		
+		    DecimalTypes = Table.TransformColumnTypes(
+		        RemovedHelper,
+		        {
+		            {"Birth rate(births/1000 population)", type number},
+		            {"Death rate(deaths/1000 population)", type number},
+		            {"Total fertility rate(children born/woman)", type number},
+		            {"Life expectancy at birth(years)", type number},
+		            {"Infant mortality rate(deaths/1000 live births)", type number},
+		            {"GDP - real growth rate(%)", type number},
+		            {"Inflation rate (consumer prices)(%)", type number},
+		            {"Unemployment rate(%)", type number},
+		            {"Industrial production growth rate(%)", type number},
+		            {"Investment (gross fixed)(% of GDP)", type number},
+		            {"Public debt(% of GDP)", type number},
+		            {"Military expenditures - percent of GDP(%)", type number},
+		            {"HIV/AIDS - adult prevalence rate(%)", type number}
+		        },
+		        "en-US"
+		    ),
+		        NameFixes = [
+		        #"Bahamas The" = "Bahamas",
+		        #"Gambia The" = "Gambia",
+		        #"Korea North" = "North Korea",
+		        #"Korea South" = "South Korea",
+		        #"Congo Democratic Republic of the" = "Democratic Republic of the Congo",
+		        #"Congo Republic of the" = "Republic of the Congo",
+		        #"Man Isle of" = "Isle of Man",
+		        #"Micronesia Federated States of" = "Micronesia",
+		        #"Falkland Islands (Islas Malvinas)" = "Falkland Islands",
+		        #"Cote d'Ivoire" = "Ivory Coast",
+		        #"Burma" = "Myanmar",
+		        #"East Timor" = "Timor-Leste",
+		        #"Macedonia" = "North Macedonia",
+		        #"Swaziland" = "Eswatini",
+		        #"Virgin Islands" = "US Virgin Islands"
+		    ],
+		
+		    RenamedCountries = Table.TransformColumns(
+		        DecimalTypes,
+		        {{"Country", each Record.FieldOrDefault(NameFixes, _, _), type text}}
+		    ),
+		        RegionLists = [
+		        #"North America" = {"Bermuda", "Canada", "Greenland", "Saint Pierre and Miquelon", "United States"},
+		        #"Latin America & Caribbean" = {"Anguilla", "Antigua and Barbuda", "Argentina", "Aruba", "Bahamas", "Barbados", "Belize", "Bolivia", "Brazil", "British Virgin Islands", "Cayman Islands", "Chile", "Colombia", "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "Ecuador", "El Salvador", "Falkland Islands", "French Guiana", "Grenada", "Guadeloupe", "Guatemala", "Guyana", "Haiti", "Honduras", "Jamaica", "Martinique", "Mexico", "Montserrat", "Netherlands Antilles", "Nicaragua", "Panama", "Paraguay", "Peru", "Puerto Rico", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Suriname", "Trinidad and Tobago", "Turks and Caicos Islands", "Uruguay", "US Virgin Islands", "Venezuela"},
+		        #"Europe & Central Asia" = {"Albania", "Andorra", "Armenia", "Austria", "Azerbaijan", "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark", "Estonia", "Faroe Islands", "Finland", "France", "Georgia", "Germany", "Gibraltar", "Greece", "Guernsey", "Hungary", "Iceland", "Ireland", "Isle of Man", "Italy", "Jersey", "Kazakhstan", "Kyrgyzstan", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "North Macedonia", "Malta", "Moldova", "Monaco", "Netherlands", "Norway", "Poland", "Portugal", "Romania", "Russia", "San Marino", "Serbia and Montenegro", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Tajikistan", "Turkey", "Turkmenistan", "Ukraine", "United Kingdom", "Uzbekistan"},
+		        #"Middle East & North Africa" = {"Algeria", "Bahrain", "Djibouti", "Egypt", "Gaza Strip", "Iran", "Iraq", "Israel", "Jordan", "Kuwait", "Lebanon", "Libya", "Morocco", "Oman", "Qatar", "Saudi Arabia", "Syria", "Tunisia", "United Arab Emirates", "West Bank", "Western Sahara", "Yemen"},
+		        #"South Asia" = {"Afghanistan", "Bangladesh", "Bhutan", "India", "Maldives", "Nepal", "Pakistan", "Sri Lanka"},
+		        #"East Asia & Pacific" = {"American Samoa", "Australia", "Brunei", "Myanmar", "Cambodia", "China", "Cook Islands", "Fiji", "French Polynesia", "Guam", "Hong Kong", "Indonesia", "Japan", "Kiribati", "North Korea", "South Korea", "Laos", "Macau", "Malaysia", "Marshall Islands", "Micronesia", "Mongolia", "Nauru", "New Caledonia", "New Zealand", "Niue", "Norfolk Island", "Northern Mariana Islands", "Palau", "Papua New Guinea", "Philippines", "Samoa", "Singapore", "Solomon Islands", "Taiwan", "Thailand", "Timor-Leste", "Tokelau", "Tonga", "Tuvalu", "Vanuatu", "Vietnam", "Wallis and Futuna"},
+		        #"Sub-Saharan Africa" = {"Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cape Verde", "Central African Republic", "Chad", "Comoros", "Democratic Republic of the Congo", "Republic of the Congo", "Ivory Coast", "Equatorial Guinea", "Eritrea", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Mayotte", "Mozambique", "Namibia", "Niger", "Nigeria", "Reunion", "Rwanda", "Saint Helena", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "Sudan", "Eswatini", "Tanzania", "Togo", "Uganda", "Zambia", "Zimbabwe"}
+		    ],
+		
+		    RegionTable = Table.FromRows(
+		        List.Combine(
+		            List.Transform(
+		                Record.FieldNames(RegionLists),
+		                (r) => List.Transform(Record.Field(RegionLists, r), (c) => {c, r})
+		            )
+		        ),
+		        {"Country", "Region"}
+		    ),
+		
+		    JoinedRegion = Table.NestedJoin(RenamedCountries, {"Country"}, RegionTable, {"Country"}, "RegionT", JoinKind.LeftOuter),
+		    ExpandedRegion = Table.ExpandTableColumn(JoinedRegion, "RegionT", {"Region"}),
+		    WithRegion = Table.ReorderColumns(
+		        ExpandedRegion,
+		        List.Combine({{"Country", "Region"}, List.RemoveItems(Table.ColumnNames(ExpandedRegion), {"Country", "Region"})})
+		    ),
+		        RenamedColumns = Table.RenameColumns(
+		        WithRegion,
+		        {
+		            {"Area(sq km)", "Area"},
+		            {"Birth rate(births/1000 population)", "Birth Rate"},
+		            {"Current account balance", "Current Account Balance"},
+		            {"Death rate(deaths/1000 population)", "Death Rate"},
+		            {"Debt - external", "External Debt"},
+		            {"Electricity - consumption(kWh)", "Electricity Consumption"},
+		            {"Electricity - production(kWh)", "Electricity Production"},
+		            {"GDP - per capita", "GDP Per Capita"},
+		            {"GDP - real growth rate(%)", "GDP Growth Rate"},
+		            {"HIV/AIDS - adult prevalence rate(%)", "HIV Prevalence Rate"},
+		            {"HIV/AIDS - deaths", "HIV Deaths"},
+		            {"HIV/AIDS - people living with HIV/AIDS", "HIV Cases"},
+		            {"Highways(km)", "Highways Length"},
+		            {"Industrial production growth rate(%)", "Industrial Growth Rate"},
+		            {"Infant mortality rate(deaths/1000 live births)", "Infant Mortality Rate"},
+		            {"Inflation rate (consumer prices)(%)", "Inflation Rate"},
+		            {"Internet hosts", "Internet Hosts"},
+		            {"Internet users", "Internet Users"},
+		            {"Investment (gross fixed)(% of GDP)", "Investment Pct GDP"},
+		            {"Labor force", "Labor Force"},
+		            {"Life expectancy at birth(years)", "Life Expectancy"},
+		            {"Military expenditures - dollar figure", "Military Spending"},
+		            {"Military expenditures - percent of GDP(%)", "Military Spending Pct GDP"},
+		            {"Natural gas - consumption(cu m)", "Gas Consumption"},
+		            {"Natural gas - exports(cu m)", "Gas Exports"},
+		            {"Natural gas - imports(cu m)", "Gas Imports"},
+		            {"Natural gas - production(cu m)", "Gas Production"},
+		            {"Natural gas - proved reserves(cu m)", "Gas Reserves"},
+		            {"Oil - consumption(bbl/day)", "Oil Consumption"},
+		            {"Oil - exports(bbl/day)", "Oil Exports"},
+		            {"Oil - imports(bbl/day)", "Oil Imports"},
+		            {"Oil - production(bbl/day)", "Oil Production"},
+		            {"Oil - proved reserves(bbl)", "Oil Reserves"},
+		            {"Public debt(% of GDP)", "Public Debt Pct GDP"},
+		            {"Railways(km)", "Railways Length"},
+		            {"Reserves of foreign exchange & gold", "Foreign Reserves"},
+		            {"Telephones - main lines in use", "Fixed Phone Lines"},
+		            {"Telephones - mobile cellular", "Mobile Subscriptions"},
+		            {"Total fertility rate(children born/woman)", "Fertility Rate"},
+		            {"Unemployment rate(%)", "Unemployment Rate"}
+		        }
+		    ),
+		        GDPCategory = Table.AddColumn(
+		        RenamedColumns, "GDP Category",
+		        each if [GDP] = null then "No Data"
+		             else if [GDP] < 1e10 then "Low"
+		             else if [GDP] < 1e11 then "Medium"
+		             else if [GDP] < 1e12 then "High"
+		             else "Very High",
+		        type text
+		    ),
+		
+		    GDPCategoryOrder = Table.AddColumn(
+		        GDPCategory, "GDP Category Order",
+		        each List.PositionOf({"Low", "Medium", "High", "Very High", "No Data"}, [GDP Category]) + 1,
+		        Int64.Type
+		    ),
+		
+		    PopulationCategory = Table.AddColumn(
+		        GDPCategoryOrder, "Population Category",
+		        each if [Population] = null then "No Data"
+		             else if [Population] < 1e6 then "Small"
+		             else if [Population] < 1e7 then "Medium"
+		             else if [Population] < 1e8 then "Large"
+		             else "Very Large",
+		        type text
+		    ),
+		
+		    PopulationCategoryOrder = Table.AddColumn(
+		        PopulationCategory, "Population Category Order",
+		        each List.PositionOf({"Small", "Medium", "Large", "Very Large", "No Data"}, [Population Category]) + 1,
+		        Int64.Type
+		    ),
+		        DevelopmentLevel = Table.AddColumn(
+		        PopulationCategoryOrder, "Development Level",
+		        each if [GDP Per Capita] = null then "No Data"
+		             else if [GDP Per Capita] < 2000 then "Low"
+		             else if [GDP Per Capita] < 6000 then "Lower Middle"
+		             else if [GDP Per Capita] < 15000 then "Upper Middle"
+		             else "High",
+		        type text
+		    ),
+		
+		    DevelopmentLevelOrder = Table.AddColumn(
+		        DevelopmentLevel, "Development Level Order",
+		        each List.PositionOf({"Low", "Lower Middle", "Upper Middle", "High", "No Data"}, [Development Level]) + 1,
+		        Int64.Type
+		    ),
+		
+		    GrowthCategory = Table.AddColumn(
+		        DevelopmentLevelOrder, "Growth Indicator Category",
+		        each if [GDP Growth Rate] = null then "No Data"
+		             else if [GDP Growth Rate] < 0 then "Contracting"
+		             else if [GDP Growth Rate] < 3 then "Low Growth"
+		             else if [GDP Growth Rate] < 6 then "Moderate Growth"
+		             else "High Growth",
+		        type text
+		    ),
+		
+		    GrowthCategoryOrder = Table.AddColumn(
+		        GrowthCategory, "Growth Indicator Category Order",
+		        each List.PositionOf({"Contracting", "Low Growth", "Moderate Growth", "High Growth", "No Data"}, [Growth Indicator Category]) + 1,
+		        Int64.Type
+		    ),
+		  #"Removed duplicates" = Table.Distinct(GrowthCategoryOrder, {"Country"})
+		in
+		    #"Removed duplicates"
+	lineageTag: 5bb55ac7-a522-42ad-8155-b71877b135f8
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,338 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 616.13692169373871,
+            "y": 13.032586850587222
+          },
+          "nodeIndex": "Economy",
+          "nodeLineageTag": "be11dc1c-89cd-4820-aa21-7724f6dadb4d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 50.007760175048929,
+            "y": 406.99357098295332
+          },
+          "nodeIndex": "Energy",
+          "nodeLineageTag": "47dbe880-b9a8-4c5a-b968-a9465ad8dd95",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 398.30819815517214,
+            "y": 366.00027279108855
+          },
+          "nodeIndex": "Geography",
+          "nodeLineageTag": "a69b7c38-99af-4a0f-8955-052cef004cb3",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 631.66846789142539,
+            "y": 667.54697971389567
+          },
+          "nodeIndex": "Health",
+          "nodeLineageTag": "2e1f2888-1de5-4c0c-8b83-19fb84db357f",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 783.40240001783786,
+            "y": 366.4773663184078
+          },
+          "nodeIndex": "Infrastructure",
+          "nodeLineageTag": "a7a21d74-3309-4890-8012-faa1b0fdf6c5",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 202.41393286682046
+          },
+          "nodeIndex": "Military",
+          "nodeLineageTag": "e9676510-0ef1-4ebc-a463-2d5a20016de8",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 345.35737391219726,
+            "y": 681.95940132678936
+          },
+          "nodeIndex": "Population",
+          "nodeLineageTag": "9c27953e-f9c1-4e15-af1f-1e4b634b0518",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 329.90912611306658,
+            "y": -50
+          },
+          "nodeIndex": "Trade_Finance",
+          "nodeLineageTag": "53ddb672-0a95-4c69-84a6-7733fdd888e4",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1426.63059084034,
+            "y": 45.357347121136428
+          },
+          "nodeIndex": "Insights Table",
+          "nodeLineageTag": "549879c1-af84-4006-a647-55c7bf9ee7b3",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1427.1960554574396,
+            "y": 283.06022037399276
+          },
+          "nodeIndex": "Recommendations Table",
+          "nodeLineageTag": "740f4aed-c401-49ce-98ef-19cf0ea3b97c",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1439.5066539302829,
+            "y": 515.02661402492492
+          },
+          "nodeIndex": "Cleaning Result",
+          "nodeLineageTag": "61217579-787d-4521-ba89-21b6e0254412",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 68.113314826871743,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 242.17957411019492,
+            "y": 574.93309835013781
+          },
+          "nodeIndex": "Economy",
+          "nodeLineageTag": "be11dc1c-89cd-4820-aa21-7724f6dadb4d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 528.70483806007155,
+            "y": 792.7928488022485
+          },
+          "nodeIndex": "Energy",
+          "nodeLineageTag": "47dbe880-b9a8-4c5a-b968-a9465ad8dd95",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 566.492515130295,
+            "y": 444.25081651073651
+          },
+          "nodeIndex": "Geography",
+          "nodeLineageTag": "a69b7c38-99af-4a0f-8955-052cef004cb3",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 342.76533171722838,
+            "y": -50
+          },
+          "nodeIndex": "Health",
+          "nodeLineageTag": "2e1f2888-1de5-4c0c-8b83-19fb84db357f",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 268.258659572263
+          },
+          "nodeIndex": "Infrastructure",
+          "nodeLineageTag": "a7a21d74-3309-4890-8012-faa1b0fdf6c5",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 818.04208191250882,
+            "y": 750.37824303887066
+          },
+          "nodeIndex": "Military",
+          "nodeLineageTag": "e9676510-0ef1-4ebc-a463-2d5a20016de8",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 804.83772485586337,
+            "y": 59.948008064246778
+          },
+          "nodeIndex": "Population",
+          "nodeLineageTag": "9c27953e-f9c1-4e15-af1f-1e4b634b0518",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1020.6064075981017,
+            "y": 420.31832107913766
+          },
+          "nodeIndex": "Trade_Finance",
+          "nodeLineageTag": "53ddb672-0a95-4c69-84a6-7733fdd888e4",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 8
+        }
+      ],
+      "name": "Core Model",
+      "zoomValue": 58.416815054873247,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "Cleaning Result",
+          "nodeLineageTag": "61217579-787d-4521-ba89-21b6e0254412",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 256.4413335583165,
+            "y": 0
+          },
+          "nodeIndex": "Insights Table",
+          "nodeLineageTag": "549879c1-af84-4006-a647-55c7bf9ee7b3",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 11.48404667140926,
+            "y": 247.12877529440411
+          },
+          "nodeIndex": "Recommendations Table",
+          "nodeLineageTag": "740f4aed-c401-49ce-98ef-19cf0ea3b97c",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 9
+        }
+      ],
+      "name": "Report Tables",
+      "zoomValue": 58.416815054873247,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

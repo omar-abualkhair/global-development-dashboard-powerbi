@@ -1,0 +1,99 @@
+table 'Insights Table'
+	lineageTag: 549879c1-af84-4006-a647-55c7bf9ee7b3
+
+	measure 'Priority Color' =
+			
+			SWITCH(
+			    SELECTEDVALUE('Recommendations Table'[Priority]),
+			    "High", "#C0392B",
+			    "Medium", "#F39C12",
+			    "Low", "#2E8B57",
+			    "#808080"
+			)
+		lineageTag: 18c5b04a-abd7-41fb-abd0-d7ee09882ae9
+
+	measure 'Evidence (Dynamic)' =
+			
+			SWITCH(
+			    SELECTEDVALUE('Insights Table'[#]),
+			    1, "Average GDP is " & FORMAT([Average GDP] / 1000000000, "0") & "bn but the median is "
+			        & FORMAT(MEDIAN(Economy[GDP]) / 1000000000, "0.00") & "bn",
+			    2, "Average " & FORMAT(AVERAGE(Economy[Inflation Rate]), "0.00") & " vs median "
+			        & FORMAT(MEDIAN(Economy[Inflation Rate]), "0.0") & "; highest value is "
+			        & FORMAT(MAX(Economy[Inflation Rate]), "0"),
+			    3, FORMAT(
+			            COUNTROWS(FILTER(Trade_Finance,
+			                NOT ISBLANK(Trade_Finance[Exports]) && NOT ISBLANK(Trade_Finance[Imports])
+			                && Trade_Finance[Exports] < Trade_Finance[Imports])), "0")
+			        & " deficit vs "
+			        & FORMAT(
+			            COUNTROWS(FILTER(Trade_Finance,
+			                NOT ISBLANK(Trade_Finance[Exports]) && NOT ISBLANK(Trade_Finance[Imports])
+			                && Trade_Finance[Exports] > Trade_Finance[Imports])), "0")
+			        & " surplus among countries with trade data",
+			    4, FORMAT(COUNTROWS(FILTER(Economy, Economy[Growth Indicator Category] = "Moderate Growth")), "0")
+			        & " Moderate Growth, "
+			        & FORMAT(COUNTROWS(FILTER(Economy, Economy[Growth Indicator Category] = "High Growth")), "0")
+			        & " High Growth, "
+			        & FORMAT(COUNTROWS(FILTER(Economy, Economy[Growth Indicator Category] = "Contracting")), "0")
+			        & " Contracting",
+			    5, "Oil imports are missing for "
+			        & FORMAT(DIVIDE(COUNTBLANK(Energy[Oil Imports]), COUNTROWS(Energy)), "0.0%")
+			        & " of countries and oil exports for "
+			        & FORMAT(DIVIDE(COUNTBLANK(Energy[Oil Exports]), COUNTROWS(Energy)), "0.0%")
+			)
+		lineageTag: c6961179-f62f-47a5-8506-b1fbd336e05c
+
+	column #
+		formatString: 0
+		lineageTag: b76cf47e-7e15-4c41-9171-3f992b0aec32
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Insight
+		lineageTag: 49103fb4-4ffd-4c93-9537-f1bf4743c5f7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Insight]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Evidence
+		lineageTag: decc54d1-b0ed-4c49-88c3-b72a44458cf7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Evidence]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Recommendation
+		lineageTag: 53f603bf-6757-4a34-abec-5011d9934b20
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Recommendation]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Insights Table' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "#", INTEGER,
+				    "Insight", STRING,
+				    "Evidence", STRING,
+				    "Recommendation", STRING,
+				    {
+				        {1, "Country wealth is highly uneven", "Average GDP is 243bn but the median is 16.25bn", "Report the median next to the average in every economic KPI"},
+				        {2, "Inflation is low for most countries; a few extreme values lift the average", "Average 5.86 vs median 3.2; Zimbabwe is at 133", "Use the median as the typical value and annotate extreme countries"},
+				        {3, "Most countries import more than they export", "154 deficit vs 69 surplus among the 223 countries with trade data", "Compare deficit countries by region and income level before drawing conclusions"},
+				        {4, "Growth is moderate for most countries, with a group of high-growth countries", "85 Moderate Growth, 56 High Growth, 9 Contracting; average 4.79 vs median 4.0", "Check whether high growth comes from a low starting base before treating it as a strength"},
+				        {5, "Data coverage is weak for energy indicators", "Oil imports are missing for 80.5% of countries and oil exports for 75.3%", "Avoid energy rankings, or state how many countries have data"}
+				    }
+				)
+
+	annotation PBI_Id = 7eefafb4fa3747f59225d19bdb363f4c
+
